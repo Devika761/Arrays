@@ -16,3 +16,29 @@ class Solution {
         return maxSum;
     }
 }
+
+-----------------------------------------------------EASY VERSION
+class Main {
+    public static void main(String[] args) {
+
+        int max = Integer.MIN_VALUE;
+
+        int arr[] = {1, 2, 3};
+
+        for (int s = 0; s < arr.length; s++) {
+
+            int sum = 0;
+
+            for (int e = s; e < arr.length; e++) {
+
+                sum = sum + arr[e];
+
+                if (sum > max) {
+                    max = sum;
+                }
+            }
+        }
+
+        System.out.println("Maximum subarray sum = " + max);
+    }
+}
