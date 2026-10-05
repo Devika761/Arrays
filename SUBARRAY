@@ -90,6 +90,10 @@ class Main {
       
       System.out.println(maxsum);
     }
+
+===============================
+Finding/generating the subarray ranges: O(n²)
+Printing every element of every subarray: O(n³)
 }   
 
 
