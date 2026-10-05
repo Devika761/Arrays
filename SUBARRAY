@@ -9,87 +9,50 @@ Space Complexity: O(1)
 
 class Main {
     public static void main(String[] args) {
-        int arr[] = {1, 2, 3};
-        int n = arr.length;
 
-        // Outer loop for start index
-        for (int start = 0; start < n; start++) {
-            // Inner loop for end index
-            for (int end = start; end < n; end++) {
-                // Print elements from start to end
-                System.out.print("[ ");
-                for (int k = start; k <= end; k++) {
-                    System.out.print(arr[k] + " ");
+        int arr[] = {1, 2, 3};
+
+        for (int start = 0; start < arr.length; start++) {
+
+            for (int end = start; end < arr.length; end++) {
+
+                System.out.print("[");
+
+                for (int i = start; i <= end; i++) {
+                    System.out.print(arr[i] + " ");
                 }
-                System.out.print("]");
-                System.out.println();
+
+                System.out.println("]");
             }
         }
     }
 }
-
 ///////---------------------------------------------------------
 
-//MAXIMUM SUBARRAY
-------Brute force-1
-TC:o(n^3)
-
-class Main {
-    public static void main(String[] args) {
-        int arr[]={1,2,3,4,5};
-        int n=arr.length;
-          int maxsum = Integer.MIN_VALUE;  // correct
-
-            
-     
-        for(int st=0;st<n;st++){
-            for(int en=0;en<n;en++){
-              int sum=0;
-                for(int i=st;i<=en;i++){
-                      System.out.print(arr[i]);
-                      sum+=arr[i];
-                      
-                }
-                  System.out.println("sum-> "+sum);
-                 maxsum=Math.max(sum,maxsum);
-            }
-              System.out.println();
-        }
-      
-      System.out.println(maxsum);
-    }
-}
 -------------------------------------------------------------------
 
 ------Brute force-2
 
-/*{
-TC:o(n^2)
-You keep a running sum starting at each index and update the maximum whenever the sum grows.
-Example with [4, -1, 2]:
-Start at 0 → 4, 3, 5
-Start at 1 → -1, 1
-Start at 2 → 2
-Max = 5
-}*/
-
+TC : 0(N^2)
 class Main {
     public static void main(String[] args) {
-        int arr[]={1,2,3,4,5};
-        int n=arr.length;
-          int maxsum = Integer.MIN_VALUE;  
-        for(int st=0;st<n;st++){
-             int currSum=0;
-            for(int en=0;en<n;en++){
-        
-                currSum+=arr[en];
-                      
-                 maxsum=Math.max(currSum,maxsum);
+
+        int arr[] = {1, 2, 3};
+
+        for (int start = 0; start < arr.length; start++) {
+
+            int sum = 0;
+
+            for (int end = start; end < arr.length; end++) {
+
+                sum = sum + arr[end];
+
+                System.out.println("Subarray from " + start + " to " + end
+                                   + " = " + sum);
             }
         }
-      
-      System.out.println(maxsum);
     }
+}
 
 ===============================
 Finding/generating the subarray ranges: O(n²)
