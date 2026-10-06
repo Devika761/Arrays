@@ -1,0 +1,55 @@
+import java.util.Arrays;
+
+class Main {
+    public static void main(String[] args) {
+
+        int[] arr = {7, 3, 2, 4, 9, 12, 56};
+        int m = 3;
+
+        Arrays.sort(arr);
+
+        for (int s = 0; s <= arr.length - m; s++) {
+
+            for (int i = s; i < s + m; i++) {
+                System.out.print(arr[i] + " ");
+            }
+
+            System.out.println();
+        }
+    }
+}
+
+==========================================
+import java.util.Arrays;
+
+class Main {
+    public static void main(String[] args) {
+
+        int[] arr = {7, 3, 2, 4, 9, 12, 56};
+
+        int m = 3;
+
+        Arrays.sort(arr);
+
+        int min = Integer.MAX_VALUE;
+
+        for (int s = 0; s <= arr.length - m; s++) {
+
+            int difference = arr[s + m - 1] - arr[s];
+
+            if (difference < min) {
+                min = difference;
+            }
+        }
+
+        System.out.println("Minimum difference: " + min);
+    }
+
+
+
+| Code                    | Time                                  | Extra Space |
+| ----------------------- | ------------------------------------- | ----------- |
+| Print all windows       | **O(n log n + nm)** → worst **O(n²)** | **O(1)***   |
+| Find minimum difference | **O(n log n)**                        | **O(1)***   |
+
+}
