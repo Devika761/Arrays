@@ -1,0 +1,183 @@
+//BRUTE FORCE--TC:(NXN!)
+
+
+
+import java.util.*;
+
+class Main {
+    static void generate(int[] arr, int index,
+                         List<List<Integer>> result) {
+        if (index == arr.length) {
+            List<Integer> temp = new ArrayList<>();
+            for (int num : arr) {
+                temp.add(num);
+            }
+            result.add(temp);
+            return;
+        }
+
+        for (int i = index; i < arr.length; i++) {
+            swap(arr, index, i);
+            generate(arr, index + 1, result);
+            swap(arr, index, i);
+        }
+    }
+
+    static void swap(int[] arr, int i, int j) {
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+
+    public static void main(String[] args) {
+        int[] nums = {1, 2, 3};
+        List<List<Integer>> result = new ArrayList<>();
+
+        generate(nums, 0, result);
+
+        result.sort((a, b) -> {
+            for (int i = 0; i < a.size(); i++) {
+                int cmp = Integer.compare(a.get(i), b.get(i));
+                if (cmp != 0) return cmp;
+            }
+            return 0;
+        });
+
+        List<Integer> current = new ArrayList<>();
+        for (int num : nums) current.add(num);
+
+        int pos = result.indexOf(current);
+
+        if (pos == result.size() - 1) {
+            System.out.println(result.get(0));
+        } else {
+            System.out.println(result.get(pos + 1));
+        }
+    }
+}
+
+
+-------------------------------------------------------------
+
+
+//better approach 
+
+import java.util.*;
+
+class Main {
+    static List<List<Integer>> result = new ArrayList<>();
+
+    static void generate(int[] arr, int index) {
+        if (index == arr.length) {
+            List<Integer> temp = new ArrayList<>();
+            for (int num : arr) temp.add(num);
+            result.add(temp);
+            return;
+        }
+
+        for (int i = index; i < arr.length; i++) {
+            swap(arr, index, i);
+            generate(arr, index + 1);
+            swap(arr, index, i);
+        }
+    }
+
+    static void swap(int[] arr, int i, int j) {
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+
+    static int compare(List<Integer> a, int[] nums) {
+        for (int i = 0; i < nums.length; i++) {
+            if (a.get(i) != nums[i]) {
+                return Integer.compare(a.get(i), nums[i]);
+            }
+        }
+        return 0;
+    }
+
+    public static void main(String[] args) {
+        int[] nums = {1, 2, 3};
+
+        generate(nums.clone(), 0);
+
+        List<Integer> next = null;
+
+        for (List<Integer> p : result) {
+            if (compare(p, nums) > 0) {
+                if (next == null ||
+                    compare(p, next.stream()
+                                   .mapToInt(Integer::intValue)
+                                   .toArray()) < 0) {
+                    next = p;
+                }
+            }
+        }
+
+        if (next == null) {
+            Arrays.sort(nums);
+            System.out.println(Arrays.toString(nums));
+        } else {
+            System.out.println(next);
+        }
+    }
+}
+
+-------------------------------------------------------------
+
+//OPTIMAL APPROACH
+
+import java.util.Arrays;
+
+class Main {
+    static void nextPermutation(int[] nums) {
+        int i = nums.length - 2;
+
+        // Step 1: Find the pivot
+        while (i >= 0 && nums[i] >= nums[i + 1]) {
+            i--;
+        }
+
+        if (i >= 0) {
+            // Step 2: Find the next greater element
+            int j = nums.length - 1;
+
+            while (nums[j] <= nums[i]) {
+                j--;
+            }
+
+            // Step 3: Swap pivot and next greater element
+            int temp = nums[i];
+            nums[i] = nums[j];
+            nums[j] = temp;
+        }
+
+        // Step 4: Reverse the suffix
+        int left = i + 1;
+        int right = nums.length - 1;
+
+        while (left < right) {
+            int temp = nums[left];
+            nums[left] = nums[right];
+            nums[right] = temp;
+
+            left++;
+            right--;
+        }
+    }
+
+    public static void main(String[] args) {
+        int[] nums = {1, 2, 3};
+
+        nextPermutation(nums);
+
+        System.out.println(Arrays.toString(nums));
+    }
+}
+
+
+Approach	Time complexity	Extra space
+Brute force + sorting	\(O(n! \times n^2)\)	\(O(n! \times n)\)
+Generate + compare	\(O(n! \times n)\)	\(O(n! \times n)\)
+Pivot + swap + reverse	\(O(n)\)	\(O(1)\)
