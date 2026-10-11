@@ -1,0 +1,27 @@
+//BINARY SEARCH--\(O(\log n)\).
+
+
+class Main {
+    public static void main(String[] args) {
+        int arr[] = {1, 2, 3, 4, 5, 6, 7};
+        int tar = 5;
+
+        int s = 0;
+        int e = arr.length - 1;
+
+        while (s <= e) {
+            int mid = (s + e) / 2;
+
+            if (arr[mid] == tar) {
+                System.out.println(mid);
+                return;
+            } else if (arr[mid] > tar) {
+                e = mid - 1;
+            } else {
+                s = mid + 1;
+            }
+        }
+
+        System.out.println(-1);
+    }
+}
